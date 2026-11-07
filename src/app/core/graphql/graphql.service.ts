@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 
 interface GraphqlResponse<T> {
   data?: T;
@@ -30,6 +30,14 @@ export class GraphqlService {
             throw new Error('Empty GraphQL response');
           }
           return res.data;
+        }),
+        catchError((err: unknown) => {
+          if (err instanceof HttpErrorResponse) {
+            return throwError(
+              () => new Error(`Request failed (${err.status || 'network'})`),
+            );
+          }
+          return throwError(() => err);
         }),
       );
   }

@@ -23,13 +23,13 @@ export class PokeapiService {
     offset = 0,
   ): Observable<Pokemon[]> {
     return this.graphql
-      .query$<{ pokemon_v2_pokemon: Parameters<typeof mapPokemon>[0][] }>(
+      .query$<{ pokemon: Parameters<typeof mapPokemon>[0][] }>(
         POKEAPI_GRAPHQL_URL,
         GET_POKEMON,
         { limit, offset },
       )
       .pipe(
-        map((data) => data.pokemon_v2_pokemon.map(mapPokemon)),
+        map((data) => data.pokemon.map(mapPokemon)),
         retry({
           count: POKEAPI_RETRY_COUNT,
           delay: () => timer(POKEAPI_RETRY_DELAY_MS),
@@ -42,11 +42,13 @@ export class PokeapiService {
    */
   getAbilities$(pokemonId: number): Observable<PokemonAbility[]> {
     return this.graphql
-      .query$<{
-        pokemon_v2_pokemonability: Parameters<typeof mapAbilities>[0];
-      }>(POKEAPI_GRAPHQL_URL, GET_ABILITIES, { pokemonId })
+      .query$<{ pokemonability: Parameters<typeof mapAbilities>[0] }>(
+        POKEAPI_GRAPHQL_URL,
+        GET_ABILITIES,
+        { pokemonId },
+      )
       .pipe(
-        map((data) => mapAbilities(data.pokemon_v2_pokemonability as never)),
+        map((data) => mapAbilities(data.pokemonability as never)),
         retry({
           count: POKEAPI_RETRY_COUNT,
           delay: () => timer(POKEAPI_RETRY_DELAY_MS),

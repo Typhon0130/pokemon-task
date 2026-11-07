@@ -34,7 +34,7 @@ npm test
 
 ## Architecture
 
-- `pokedex/` — PokéAPI queries, `PokemonStore` + selectors, table + detail panel + radar chart
+- `pokedex/` — PokéAPI GraphQL (`https://graphql.pokeapi.co/v1beta2`), `PokemonStore` + selectors, table + detail panel + radar chart
 - `teams/` — local GraphQL mutations, `TeamStore` with optimistic create/delete, reactive team form
 - `core/graphql` — shared HTTP GraphQL client
 - `common/` — toast, skeleton, type badges, constants

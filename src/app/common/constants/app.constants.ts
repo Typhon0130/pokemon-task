@@ -1,4 +1,4 @@
-export const POKEAPI_GRAPHQL_URL = 'https://beta.pokeapi.co/graphql/v1beta';
+export const POKEAPI_GRAPHQL_URL = 'https://graphql.pokeapi.co/v1beta2';
 export const LOCAL_GRAPHQL_URL = 'http://127.0.0.1:4000';
 
 export const POKEAPI_RETRY_COUNT = 2;

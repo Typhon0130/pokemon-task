@@ -35,7 +35,7 @@
     } @else if (data.state.status === 'error' && !data.state.items.length) {
       <app-state-panel
         title="Could not load Pokédex"
-        [message]="data.state.error ?? 'Network error.'"
+        message="Check your connection, then retry."
         (retry)="retry()"
       />
     } @else if (!data.paged.total) {
