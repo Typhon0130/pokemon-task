@@ -1,0 +1,9 @@
+FROM node:24-alpine
+WORKDIR /app
+
+RUN npm install -g json-graphql-server@3.3.2
+
+COPY db.js ./
+
+EXPOSE 4000
+CMD ["json-graphql-server", "db.js", "--port", "4000", "--host", "0.0.0.0"]

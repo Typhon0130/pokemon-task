@@ -1,0 +1,9 @@
+node_modules
+dist
+.angular
+.git
+.cursor
+coverage
+*.md
+.vscode
+agent-transcripts

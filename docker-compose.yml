@@ -1,0 +1,16 @@
+services:
+  mock-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    ports:
+      - '4000:4000'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '4200:80'
+    depends_on:
+      - mock-api
