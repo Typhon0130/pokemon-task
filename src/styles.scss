@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  color-scheme: dark;
+  @include mat.theme(
+    (
+      color: (
+        theme-type: dark,
+        primary: mat.$azure-palette,
+        tertiary: mat.$orange-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+:root {
+  --color-primary: var(--mat-sys-primary);
+  --color-accent: #ffb414;
+  --color-surface: var(--mat-sys-surface);
+  --color-surface-2: var(--mat-sys-surface-container);
+  --color-surface-overlay: color-mix(in srgb, var(--mat-sys-scrim) 72%, transparent);
+  --panel-width: 393px;
+  --backdrop-blur: blur(16px);
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+}
+
+* {
+  box-sizing: border-box;
+}

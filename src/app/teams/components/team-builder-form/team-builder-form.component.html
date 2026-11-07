@@ -1,0 +1,60 @@
+<form class="builder" [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field appearance="outline" class="builder__full">
+    <mat-label>Team name</mat-label>
+    <input matInput formControlName="name" maxlength="30" />
+    @if (form.controls.name.touched || form.controls.name.dirty) {
+      @if (form.controls.name.hasError('required')) {
+        <mat-error>Name is required.</mat-error>
+      } @else if (form.controls.name.hasError('minlength') || form.controls.name.hasError('maxlength')) {
+        <mat-error>Name must be 3–30 characters.</mat-error>
+      } @else if (form.controls.name.hasError('uniqueName')) {
+        <mat-error>That team name is already taken.</mat-error>
+      }
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="builder__full">
+    <mat-label>Add Pokémon</mat-label>
+    <input
+      matInput
+      type="search"
+      placeholder="Type a name…"
+      [formControl]="pickerControl"
+      [disabled]="!canAddMore()"
+    />
+  </mat-form-field>
+
+  @if (suggestStatus() === 'loading') {
+    <p class="builder__hint">Searching…</p>
+  } @else if (suggestStatus() === 'empty') {
+    <p class="builder__hint">No matches.</p>
+  } @else if (suggestStatus() === 'ready') {
+    <mat-nav-list class="builder__suggestions">
+      @for (hit of suggestions(); track hit.id) {
+        <button mat-list-item type="button" (click)="addPokemon(hit)">
+          <img matListItemAvatar [src]="hit.spriteUrl" [alt]="hit.name" width="28" height="28" />
+          <span matListItemTitle class="builder__name">{{ hit.name }}</span>
+        </button>
+      }
+    </mat-nav-list>
+  }
+
+  <mat-chip-set class="builder__chips" aria-label="Selected Pokémon">
+    @for (p of selected(); track p.id) {
+      <mat-chip (removed)="removePokemon(p.id)">
+        {{ p.name }}
+        <button matChipRemove type="button" aria-label="Remove">×</button>
+      </mat-chip>
+    } @empty {
+      <p class="builder__hint">Pick 1–6 Pokémon.</p>
+    }
+  </mat-chip-set>
+
+  <button
+    matButton="filled"
+    type="submit"
+    [disabled]="form.invalid || selected().length < 1 || submitting()"
+  >
+    {{ submitting() ? 'Creating…' : 'Create team' }}
+  </button>
+</form>

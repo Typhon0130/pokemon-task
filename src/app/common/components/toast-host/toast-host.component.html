@@ -1,0 +1,8 @@
+<div class="toast-host" aria-live="polite">
+  @for (msg of toast.messages(); track msg.id) {
+    <div class="toast" [class.toast--error]="msg.kind === 'error'">
+      <span>{{ msg.text }}</span>
+      <button type="button" (click)="toast.dismiss(msg.id)" aria-label="Dismiss">×</button>
+    </div>
+  }
+</div>

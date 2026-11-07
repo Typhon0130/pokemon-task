@@ -1,0 +1,35 @@
+<div class="teams">
+  @for (card of cards(); track card.team.id) {
+    <mat-card
+      class="teams__card"
+      [class.teams__card--selected]="card.team.id === selectedTeamId()"
+      (click)="select(card.team.id)"
+    >
+      <mat-card-header>
+        <mat-card-title>{{ card.team.name }}</mat-card-title>
+        <button
+          matButton="text"
+          type="button"
+          color="warn"
+          (click)="remove(card.team.id, $event)"
+        >
+          Delete
+        </button>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="teams__meta">{{ card.members.length }} Pokémon · {{ card.total }} base stats</p>
+        <div class="teams__sprites">
+          @for (member of card.members; track member.id) {
+            <img [src]="member.spriteUrl" [alt]="member.name" width="36" height="36" />
+          }
+        </div>
+        <div class="teams__types">
+          @for (entry of card.types; track entry[0]) {
+            <app-type-badge [type]="entry[0]" />
+            <span class="teams__count">×{{ entry[1] }}</span>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

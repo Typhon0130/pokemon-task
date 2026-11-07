@@ -1,0 +1,47 @@
+.table-wrap {
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.pokedex-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+
+  th,
+  td {
+    padding: 0.55rem 0.65rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  th button {
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  tbody tr {
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+  }
+
+  img {
+    image-rendering: pixelated;
+    vertical-align: middle;
+  }
+
+  &__name {
+    text-transform: capitalize;
+    font-weight: 600;
+  }
+}

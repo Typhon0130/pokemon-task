@@ -1,0 +1,33 @@
+<section class="teams-page">
+  <div class="teams-page__builder">
+    <h2>Build a team</h2>
+    <app-team-builder-form />
+  </div>
+
+  <div class="teams-page__list">
+    <h2>Your teams</h2>
+    @if (state(); as data) {
+      @if (data.status === 'loading' && !data.teams.length) {
+        <div class="teams-page__skeletons">
+          @for (i of [1, 2, 3]; track i) {
+            <app-skeleton-block height="5rem" />
+          }
+        </div>
+      } @else if (data.status === 'error' && !data.teams.length) {
+        <app-state-panel
+          title="Could not load teams"
+          [message]="data.error ?? 'Is the mock server running on port 4000?'"
+          (retry)="retry()"
+        />
+      } @else if (!data.teams.length) {
+        <app-state-panel
+          title="No teams yet"
+          message="Create your first team with the form."
+          [showRetry]="false"
+        />
+      } @else {
+        <app-team-list [teams]="data.teams" [selectedTeamId]="data.selectedTeamId" />
+      }
+    }
+  </div>
+</section>

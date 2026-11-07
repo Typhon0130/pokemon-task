@@ -1,0 +1,14 @@
+.state-panel {
+  padding: 1.5rem;
+  text-align: center;
+
+  &__title {
+    margin: 0 0 0.35rem;
+    font: var(--mat-sys-title-medium);
+  }
+
+  &__message {
+    margin: 0 0 1rem;
+    color: color-mix(in srgb, var(--mat-sys-on-surface) 75%, transparent);
+  }
+}

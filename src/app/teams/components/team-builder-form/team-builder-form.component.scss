@@ -1,0 +1,34 @@
+.builder {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container);
+  border: 1px solid color-mix(in srgb, var(--mat-sys-outline) 35%, transparent);
+
+  &__full {
+    width: 100%;
+  }
+
+  &__hint {
+    margin: 0;
+    color: color-mix(in srgb, var(--mat-sys-on-surface) 65%, transparent);
+    font-size: 0.85rem;
+  }
+
+  &__suggestions {
+    border: 1px solid color-mix(in srgb, var(--mat-sys-outline) 35%, transparent);
+    border-radius: 8px;
+    max-height: 220px;
+    overflow: auto;
+    padding: 0;
+  }
+
+  &__name {
+    text-transform: capitalize;
+  }
+
+  &__chips {
+    min-height: 2rem;
+  }
+}

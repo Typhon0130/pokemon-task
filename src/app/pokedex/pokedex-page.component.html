@@ -1,0 +1,82 @@
+<section class="pokedex">
+  <header class="pokedex__toolbar">
+    <mat-form-field appearance="outline" class="pokedex__search">
+      <mat-label>Search by name</mat-label>
+      <input matInput type="search" [formControl]="searchControl" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Type</mat-label>
+      <mat-select [formControl]="typeControl">
+        <mat-option value="">All types</mat-option>
+        @for (type of vm()?.types ?? []; track type) {
+          <mat-option [value]="type">{{ type }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Page size</mat-label>
+      <mat-select [formControl]="pageSizeControl">
+        @for (size of pageSizes; track size) {
+          <mat-option [value]="size">{{ size }} / page</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </header>
+
+  @if (vm(); as data) {
+    @if (data.state.status === 'loading' && !data.state.items.length) {
+      <div class="pokedex__skeletons">
+        @for (i of [1, 2, 3, 4, 5]; track i) {
+          <app-skeleton-block height="2.4rem" />
+        }
+      </div>
+    } @else if (data.state.status === 'error' && !data.state.items.length) {
+      <app-state-panel
+        title="Could not load Pokédex"
+        [message]="data.state.error ?? 'Network error.'"
+        (retry)="retry()"
+      />
+    } @else if (!data.paged.total) {
+      <app-state-panel
+        title="No Pokémon found"
+        message="Try another search or type filter."
+        [showRetry]="false"
+      />
+    } @else {
+      <app-pokedex-table
+        [rows]="data.paged.rows"
+        [sortKey]="data.state.sortKey"
+        [sortDir]="data.state.sortDir"
+        (sortChange)="onSort($event)"
+        (rowClick)="openDetail($event)"
+      />
+      <footer class="pokedex__pager">
+        <button
+          matButton="outlined"
+          type="button"
+          [disabled]="data.paged.page <= 1"
+          (click)="setPage(data.paged.page - 1)"
+        >
+          Prev
+        </button>
+        <span>Page {{ data.paged.page }} / {{ data.paged.totalPages }} ({{ data.paged.total }})</span>
+        <button
+          matButton="outlined"
+          type="button"
+          [disabled]="data.paged.page >= data.paged.totalPages"
+          (click)="setPage(data.paged.page + 1)"
+        >
+          Next
+        </button>
+      </footer>
+    }
+  }
+</section>
+
+<app-pokemon-detail-panel
+  [open]="panelOpen()"
+  [pokemon]="selected()"
+  (closed)="closeDetail()"
+/>

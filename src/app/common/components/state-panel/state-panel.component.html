@@ -1,0 +1,7 @@
+<div class="state-panel">
+  <p class="state-panel__title">{{ title() }}</p>
+  <p class="state-panel__message">{{ message() }}</p>
+  @if (showRetry()) {
+    <button matButton="filled" type="button" (click)="retry.emit()">Retry</button>
+  }
+</div>

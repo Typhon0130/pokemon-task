@@ -1,0 +1,35 @@
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    gap: 0.25rem;
+  }
+
+  &__brand {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+
+  &__spacer {
+    flex: 1;
+  }
+
+  a.is-active {
+    background: color-mix(in srgb, var(--mat-sys-primary) 18%, transparent);
+  }
+
+  &__main {
+    flex: 1;
+    padding: 1.25rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,49 @@
+.teams {
+  display: grid;
+  gap: 0.85rem;
+
+  &__card {
+    cursor: pointer;
+
+    &--selected {
+      outline: 2px solid var(--mat-sys-primary);
+    }
+
+    mat-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.35rem;
+    }
+  }
+
+  &__meta {
+    margin: 0 0 0.55rem;
+    opacity: 0.75;
+    font-size: 0.85rem;
+  }
+
+  &__sprites {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+
+    img {
+      image-rendering: pixelated;
+    }
+  }
+
+  &__types {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+  &__count {
+    margin-right: 0.45rem;
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+}

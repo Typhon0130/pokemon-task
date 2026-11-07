@@ -1,0 +1,52 @@
+@if (open() && pokemon(); as p) {
+  <aside class="detail" role="dialog" aria-modal="true">
+    <header class="detail__header">
+      <div>
+        <p class="detail__id">#{{ p.id }}</p>
+        <h2 class="detail__name">{{ p.name }}</h2>
+        <div class="detail__types">
+          @for (type of p.types; track type) {
+            <app-type-badge [type]="type" />
+          }
+        </div>
+      </div>
+      <button matIconButton type="button" (click)="closed.emit()" aria-label="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+    </header>
+
+    <img class="detail__sprite" [src]="p.spriteUrl" [alt]="p.name" width="120" height="120" />
+
+    <p class="detail__meta">
+      Height {{ p.height / 10 | number: '1.1-1' }} m · Weight {{ p.weight / 10 | number: '1.1-1' }} kg
+    </p>
+
+    <app-pokemon-radar [pokemon]="p" />
+
+    <h3>Abilities</h3>
+    @if (abilitiesStatus() === 'loading') {
+      <p class="detail__muted">Loading abilities…</p>
+    } @else if (abilitiesStatus() === 'error') {
+      <app-state-panel
+        title="Abilities unavailable"
+        [message]="abilitiesError() ?? 'Please try again.'"
+        (retry)="retryAbilities()"
+      />
+    } @else if (!abilities().length) {
+      <p class="detail__muted">No abilities found.</p>
+    } @else {
+      <ul class="detail__abilities">
+        @for (ability of abilities(); track ability.name) {
+          <li>
+            <strong>{{ ability.name }}</strong>
+            @if (ability.isHidden) {
+              <span class="detail__hidden">hidden</span>
+            }
+            <p>{{ ability.shortEffect }}</p>
+          </li>
+        }
+      </ul>
+    }
+  </aside>
+  <button type="button" class="detail__backdrop" (click)="closed.emit()" aria-label="Close panel"></button>
+}
